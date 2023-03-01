@@ -19,6 +19,10 @@ import { catalogModuleTemplateKind } from '@backstage/plugin-scaffolder-backend/
 import { createBackend } from '@backstage/backend-defaults';
 import { appPlugin } from '@backstage/plugin-app-backend/alpha';
 import { todoPlugin } from '@backstage/plugin-todo-backend';
+import { searchPlugin } from '@backstage/plugin-search-backend';
+import { elasticSearchEngineModule } from '@backstage/plugin-search-backend-module-elasticsearch';
+import { pgSearchEngineModule } from '@backstage/plugin-search-backend-module-pg';
+import { lunrSearchEngineModule } from '@backstage/plugin-search-backend-node/';
 
 const backend = createBackend();
 
@@ -26,4 +30,10 @@ backend.add(catalogPlugin());
 backend.add(catalogModuleTemplateKind());
 backend.add(appPlugin({ appPackageName: 'example-app' }));
 backend.add(todoPlugin());
+
+backend.add(searchPlugin());
+backend.add(elasticSearchEngineModule());
+backend.add(pgSearchEngineModule());
+backend.add(lunrSearchEngineModule());
+
 backend.start();
