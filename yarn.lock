@@ -7910,6 +7910,7 @@ __metadata:
   resolution: "@backstage/plugin-search-backend-node@workspace:plugins/search-backend-node"
   dependencies:
     "@backstage/backend-common": "workspace:^"
+    "@backstage/backend-plugin-api": "workspace:^"
     "@backstage/backend-tasks": "workspace:^"
     "@backstage/cli": "workspace:^"
     "@backstage/config": "workspace:^"
@@ -7931,6 +7932,7 @@ __metadata:
   resolution: "@backstage/plugin-search-backend@workspace:plugins/search-backend"
   dependencies:
     "@backstage/backend-common": "workspace:^"
+    "@backstage/backend-plugin-api": "workspace:^"
     "@backstage/cli": "workspace:^"
     "@backstage/config": "workspace:^"
     "@backstage/errors": "workspace:^"
