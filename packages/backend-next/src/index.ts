@@ -21,8 +21,55 @@ import { appPlugin } from '@backstage/plugin-app-backend/alpha';
 import { todoPlugin } from '@backstage/plugin-todo-backend';
 import { searchPlugin } from '@backstage/plugin-search-backend';
 import { elasticSearchEngineModule } from '@backstage/plugin-search-backend-module-elasticsearch';
+import {
+  coreServices,
+  createBackendModule,
+} from '@backstage/backend-plugin-api';
+import { searchIndexRegistryExtensionPoint } from '@backstage/plugin-search-backend-node';
+import { DefaultCatalogCollatorFactory } from '@backstage/plugin-catalog-backend';
 // import { pgSearchEngineModule } from '@backstage/plugin-search-backend-module-pg';
 // import { lunrSearchEngineModule } from '@backstage/plugin-search-backend-node/';
+
+// TODO: move to search-backend-node?
+export const searchIndexRegistry = createBackendModule({
+  moduleId: 'searchIndexRegistry',
+  pluginId: 'search',
+  register(env) {
+    env.registerInit({
+      deps: {
+        indexRegistry: searchIndexRegistryExtensionPoint,
+        config: coreServices.config,
+        discovery: coreServices.discovery,
+        tokenManager: coreServices.tokenManager,
+        logger: coreServices.logger,
+        scheduler: coreServices.scheduler,
+      },
+      async init({
+        indexRegistry,
+        config,
+        discovery,
+        tokenManager,
+        scheduler,
+      }) {
+        const schedule = scheduler.createScheduledTaskRunner({
+          frequency: { minutes: 10 },
+          timeout: { minutes: 15 },
+          // A 3 second delay gives the backend server a chance to initialize before
+          // any collators are executed, which may attempt requests against the API.
+          initialDelay: { seconds: 3 },
+        });
+
+        indexRegistry.addCollator({
+          schedule,
+          factory: DefaultCatalogCollatorFactory.fromConfig(config, {
+            discovery: discovery,
+            tokenManager: tokenManager,
+          }),
+        });
+      },
+    });
+  },
+});
 
 const backend = createBackend();
 
@@ -41,5 +88,6 @@ backend.add(
     },
   }),
 );
+backend.add(searchIndexRegistry());
 
 backend.start();
