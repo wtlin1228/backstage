@@ -62,3 +62,21 @@ import { LocationSpec as NonDeprecatedLocationSpec } from '@backstage/plugin-cat
  * @deprecated use the same type from `@backstage/plugin-catalog-common` instead
  */
 export type LocationSpec = NonDeprecatedLocationSpec;
+
+/**
+ * @deprecated
+ * import from @backstage/search-backend-module-catalog instead
+ */
+export {
+  DefaultCatalogCollatorFactory,
+  defaultCatalogCollatorEntityTransformer,
+} from '@backstage/plugin-search-backend-module-catalog';
+
+/**
+ * @deprecated
+ * import from @backstage/search-backend-module-catalog instead
+ */
+export type {
+  DefaultCatalogCollatorFactoryOptions,
+  CatalogCollatorEntityTransformer,
+} from '@backstage/plugin-search-backend-module-catalog';

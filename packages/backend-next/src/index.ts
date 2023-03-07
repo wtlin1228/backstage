@@ -14,21 +14,36 @@
  * limitations under the License.
  */
 
-import { catalogPlugin } from '@backstage/plugin-catalog-backend/alpha';
-import { catalogModuleTemplateKind } from '@backstage/plugin-scaffolder-backend/alpha';
 import { createBackend } from '@backstage/backend-defaults';
 import { appPlugin } from '@backstage/plugin-app-backend/alpha';
 import { todoPlugin } from '@backstage/plugin-todo-backend';
+import { catalogPlugin } from '@backstage/plugin-catalog-backend/alpha';
+import { catalogModuleTemplateKind } from '@backstage/plugin-scaffolder-backend/alpha';
 import { searchPlugin } from '@backstage/plugin-search-backend/alpha';
-import { searchIndexRegistry } from './plugins/search';
+import { searchModuleCatalogCollator } from '@backstage/plugin-search-backend-module-catalog/alpha';
+import { searchModuleTechDocsCollator } from '@backstage/plugin-search-backend-module-techdocs/alpha';
+import { searchModuleExploreCollator } from '@backstage/plugin-search-backend-module-explore/alpha';
 
 const backend = createBackend();
 
+backend.add(appPlugin({ appPackageName: 'example-app' }));
+
+// Todo
+backend.add(todoPlugin());
+
+// Catalog
 backend.add(catalogPlugin());
 backend.add(catalogModuleTemplateKind());
-backend.add(appPlugin({ appPackageName: 'example-app' }));
-backend.add(todoPlugin());
+
+// Search
+const schedule = {
+  frequency: { minutes: 10 },
+  timeout: { minutes: 15 },
+  initialDelay: { seconds: 3 },
+};
 backend.add(searchPlugin());
-backend.add(searchIndexRegistry());
+backend.add(searchModuleCatalogCollator({ schedule }));
+backend.add(searchModuleTechDocsCollator({ schedule }));
+backend.add(searchModuleExploreCollator({ schedule }));
 
 backend.start();
