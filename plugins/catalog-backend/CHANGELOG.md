@@ -1,5 +1,18 @@
 # @backstage/plugin-catalog-backend
 
+## 1.8.0-next.2
+
+### Patch Changes
+
+- 35b55871187: Added optional parameter `documentType` to `DefaultCatalogCollatorFactoryOptions` which allows to override default document type `software-catalog`. For more details, see [How to customize document type in the Software Catalog index](../docs/features/search/how-to-guides.md#how-to-customize-document-type-in-the-software-catalog-index).
+- Updated dependencies
+  - @backstage/backend-common@0.18.3-next.2
+  - @backstage/backend-plugin-api@0.4.1-next.2
+  - @backstage/plugin-permission-node@0.7.6-next.2
+  - @backstage/plugin-catalog-node@1.3.4-next.2
+  - @backstage/config@1.0.7-next.0
+  - @backstage/integration@1.4.3-next.0
+
 ## 1.8.0-next.1
 
 ### Patch Changes
