@@ -7941,7 +7941,6 @@ __metadata:
     "@backstage/plugin-permission-common": "workspace:^"
     "@backstage/plugin-search-backend-node": "workspace:^"
     "@backstage/plugin-search-common": "workspace:^"
-    "@types/express": ^4.17.6
     dockerode: ^3.3.1
     express: ^4.17.1
     express-promise-router: ^4.1.0
@@ -7992,7 +7991,6 @@ __metadata:
     "@backstage/plugin-search-backend-node": "workspace:^"
     "@backstage/plugin-search-common": "workspace:^"
     "@backstage/plugin-techdocs-node": "workspace:^"
-    "@types/express": ^4.17.6
     dockerode: ^3.3.1
     express: ^4.17.1
     express-promise-router: ^4.1.0
